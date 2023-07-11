@@ -182,7 +182,7 @@ services:
             - '@pim_connector.reader.database.product'
             - '@pim_connector.processor.normalization.product'
             - '@pim_connector.writer.file.csv_product'
-            - '%pim_job_product_batch_size%'
+            - 5
             - '@akeneo_batch.job.job_stopper'
 
     pim_connector.step.xlsx_product.import:

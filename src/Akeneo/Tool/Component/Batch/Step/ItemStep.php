@@ -85,7 +85,6 @@ class ItemStep extends AbstractStep implements TrackableStepInterface, LoggerAwa
     {
         $itemsToWrite = [];
         $batchCount = 0;
-        $this->batchSize = 10;
 
         $this->initializeStepElements($stepExecution);
 
