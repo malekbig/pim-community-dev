@@ -93,7 +93,7 @@ class ItemStep extends AbstractStep implements TrackableStepInterface, LoggerAwa
         }
 
         while (true) {
-            sleep(2);
+            sleep(1);
             try {
                 $readItem = $this->reader->read();
                 if (null === $readItem) {
