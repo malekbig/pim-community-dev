@@ -11,6 +11,7 @@ use Akeneo\Tool\Component\Batch\Job\JobRegistry;
 use Akeneo\Tool\Component\Batch\Job\JobRepositoryInterface;
 use Akeneo\Tool\Component\Batch\Model\JobExecution;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Execute a JobExecution with the provided ID
@@ -26,6 +27,7 @@ class ExecuteJobExecutionHandler implements ExecuteJobExecutionHandlerInterface
         private JobRepositoryInterface $jobRepository,
         private JobRegistry $jobRegistry,
         private FeatureFlags $featureFlags,
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -36,6 +38,12 @@ class ExecuteJobExecutionHandler implements ExecuteJobExecutionHandlerInterface
 
         if (!$jobExecution) {
             throw new \InvalidArgumentException(sprintf('Could not find job execution "%s".', $executionId));
+        }
+
+        if ($jobExecution->getStatus()->isPaused()) {
+            $this->logger->notice('Job is resuming', [
+                'job_execution_id' => $jobExecution->getId(),
+            ]);
         }
 
         $this->doExecute($jobExecution);
