@@ -41,7 +41,7 @@ class ExecuteJobExecutionHandler implements ExecuteJobExecutionHandlerInterface
         }
 
         if ($jobExecution->getStatus()->isPaused()) {
-            $this->logger->notice('Job is resuming', [
+            $this->logger->error('Job is resuming', [
                 'job_execution_id' => $jobExecution->getId(),
             ]);
         }

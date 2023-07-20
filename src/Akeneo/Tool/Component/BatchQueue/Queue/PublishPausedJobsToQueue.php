@@ -26,12 +26,12 @@ final class PublishPausedJobsToQueue
 
         foreach ($jobExecutionIds as $jobExecutionId) {
             $jobExecutionMessage = PausedJobExecutionMessage::createJobExecutionMessage($jobExecutionId, []);
-            $this->logger->notice('Publishing job to queue', [
+            $this->logger->error('Publishing job to queue', [
                 'job_execution_id' => $jobExecutionId,
             ]);
             try {
                 $this->jobExecutionQueue->publish($jobExecutionMessage);
-                $this->logger->notice('Job successfully published', [
+                $this->logger->error('Job successfully published', [
                     'job_execution_id' => $jobExecutionId,
                 ]);
             } catch (\Exception $exception) {
